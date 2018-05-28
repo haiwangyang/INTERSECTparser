@@ -13,9 +13,9 @@ done
 <br>
 
 ## bedtool intersect target v.s each queries<br>
-* repeatmasker (both strand)
+* repeatmasker (both strand)<br>
 for feature in \`echo repeatmasker\`; do ./bedtools intersect -wo -a maker.bed -b $feature.bed >maker.$feature.intersect; done<br>
-* other features (strickly stranded)
+* other features (strickly stranded)<br>
 for feature in \`echo protein2genome genemark ori_snap ori_augustus\`; do ./bedtools intersect -s -wo -a maker.bed -b $feature.bed >maker.$feature.intersect; done<br>
 
 ## put bed files to INTERSECTparser/bed/<br>

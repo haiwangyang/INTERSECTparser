@@ -22,6 +22,6 @@ for feature in \`echo protein2genome genemark ori_snap ori_augustus\`; do ./bedt
 
 ## put intersect files to INTERSECTparser/intersect/<br>
 
-## run main python script to get percentage of coverage of CDS region for each gene<br>
+## run main python script to get percentage of coverage of CDS region for each feature<br>
 cd INTERSECTparser/<br>
 python3 compare.py<br>

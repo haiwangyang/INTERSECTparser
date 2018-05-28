@@ -1,3 +1,7 @@
+INTERSECTparser/bed/
+INTERSECTparser/intersect/
+INTERSECTparser/output/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

@@ -18,3 +18,7 @@ for feature in \`echo repeatmasker protein2genome genemark ori_snap ori_augustus
 ## put bed files to INTERSECTparser/bed/
 
 ## put intersect files to INTERSECTparser/intersect/
+
+## run main python script to get percentage of coverage of CDS region for each gene
+cd INTERSECTparser/<br>
+python3 compare.py<br>

@@ -68,18 +68,19 @@ class Intersect:
         for id1 in b.ids:
             if id1 in self.intersect_dct.keys():
                 dct_overlap = dict()
-                for start1_end1 in self.intersect_dct[id1].keys():
+                for start1_end1 in b.id2ses[id1]:
                     start1, end1 = get_start_end_from_string(start1_end1)
                     #print("START1: " + str(start1) + "\t" + "END1: " + str(end1))
                     for i in range(start1, end1, 1):
                         dct_overlap[i] = 0
-                    for start2_end2 in self.intersect_dct[id1][start1_end1]:
-                        start2, end2 = get_start_end_from_string(start2_end2)
-                        #print("START2: " + str(start2) + "\t" + "END2: " + str(end2))
-                        for ii in range(start2, end2, 1):
-                            if ii in dct_overlap.keys():
-                                dct_overlap[ii] = 1
-
+                    if start1_end1 in self.intersect_dct[id1].keys():
+                        for start2_end2 in self.intersect_dct[id1][start1_end1]:
+                            start2, end2 = get_start_end_from_string(start2_end2)
+                            #print("START2: " + str(start2) + "\t" + "END2: " + str(end2))
+                            for ii in range(start2, end2, 1):
+                                if ii in dct_overlap.keys():
+                                    dct_overlap[ii] = 1
+                        
                 count_total = 0
                 count_overlap = 0
                 for iii in dct_overlap.keys():

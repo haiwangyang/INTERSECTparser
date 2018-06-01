@@ -17,16 +17,16 @@ for i in \`cat U.list\`; do cat ${i}_6th.gff | awk -v OFS='\t' -v FS='\t' '$2=="
 for i in \`cat U.list\`; do cat ${i}_maker_final_rename_only_rmhost_addorf_secretome_mod.gff | awk -v OFS='\t' -v FS='\t' '$2=="maker"&&$3=="CDS" {print $1, $4-1, $5, $1 ":" $4 "-" $5 ";" $9, "1", $7}' >$i.C.maker.bed; done<br>
 
 ## obtain repeatmasker bed (query)<br>
-for feature in \`echo repeatmasker\`; do cat UCSC1.final.noSEQ.gff | grep -v Low_complexity | grep -v Simple_repeat | awk -v OFS='\t' -v FS='\t' '$2~"'$feature'"&&$3=="match_part" {print $1, $4-1, $5, $1 ":" $4 "-" $5 ";" $9, "1", $7}' >$feature.bed; done <br>
-
 for i in \`cat U.list\`; do for feature in \`echo repeatmasker\`; do cat ${i}_5th.gff | grep -v Low_complexity | grep -v Simple_repeat | awk -v OFS='\t' -v FS='\t' '$2~"'$feature'"&&$3=="match_part" {print $1, $4-1, $5, $1 ":" $4 "-" $5 ";" $9, "1", $7}' >$i.A.$feature.bed; done; done
 <br>
 
 
 ## obtain feature bed (queries)<br>
+for i in \`cat U.list\`; do
 for feature in \`echo  repeatmasker protein2genome genemark ori_snap ori_augustus est2genome\`;
 do 
-cat UCSC1.final.noSEQ.gff | awk -v OFS='\t' -v FS='\t' '$2~"'$feature'"&&$3=="match_part" {print $1, $4-1, $5, $1 ":" $4 "-" $5 ";" $9, "1", $7}' >$feature.bed;
+cat ${i}_5th.gff | awk -v OFS='\t' -v FS='\t' '$2~"'$feature'"&&$3=="match_part" {print $1, $4-1, $5, $1 ":" $4 "-" $5 ";" $9, "1", $7}' >$i.A.$feature.bed;
+done;
 done
 <br>
 

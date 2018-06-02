@@ -20,14 +20,16 @@ def write_dct_table(dct, path):
 
 class Bed:
     """ Bed object (now only use for maker) """
-    def __init__(self, feature):
+    def __init__(self, strain, version, feature):
+        self.strain = strain
+        self.version = version
         self.feature = feature
         self.get_feature_ids()
  
     def get_feature_ids(self):
         st = set()
         dct = dict()
-        with open("bed/" + self.feature + ".bed", "r") as f:
+        with open("bed/" + self.strain + "." + self.version + "." + self.feature + ".bed", "r") as f:
             for line in f.readlines():
                 scaffold, start, end, name, one, strand = line.rstrip().split("\t")
                 id = get_id_from_name(name)
@@ -41,7 +43,13 @@ class Bed:
 
 class Intersect:
     """ Intersect object between feature1 (now only maker) and feature2 """
-    def __init__(self, feature1, feature2):
+    def __init__(self, strain1, strain2, version1, version2, feature1, feature2):
+        self.strain1 = strain1
+        self.strain2 = strain2
+        self.strain = strain1
+        self.version1 = version1
+        self.version2 = version2
+        self.version = version1
         self.feature1 = feature1
         self.feature2 = feature2
         self.get_intersect_dct()        
@@ -50,7 +58,12 @@ class Intersect:
     def get_intersect_dct(self):
         """ get gene-level intersect dict """
         dct = dict()
-        with open("intersect/" + self.feature1 + "." + self.feature2 + ".intersect", "r") as f:
+        intersect_filename = ''
+        if self.strain1 == self.strain2 and self.version1 == self.version2:
+            intersect_filename = self.strain1 + "." + self.version1 + "." + self.feature1 + "." + self.feature2 + ".intersect"
+        if self.strain1 == self.strain2 and self.version1 != self.version2 and self.feature1 == self.feature2:
+            intersect_filename = self.strain1 + "." + self.version1 + "." + self.feature1 + "." + self.version2 + ".intersect"
+        with open("intersect/" +  intersect_filename, "r") as f:
             for line in f.readlines():
                 scaffold1, start1, end1, name1, one1, strand1, scaffold2, start2, end2, name2, one2, strand2, overlap = line.rstrip().split("\t")
                 id1 = get_id_from_name(name1)
@@ -63,7 +76,7 @@ class Intersect:
 
     def get_percentage_dct(self):
         """ get percertage of coverage on gene-level """
-        b = Bed("maker")
+        b = Bed(self.strain, self.version, "maker")
         dct = dict()
         for id1 in b.ids:
             if id1 in self.intersect_dct.keys():
@@ -98,11 +111,18 @@ class Intersect:
 
 
 def main():
-    b = Bed("maker")
-    for feature1 in ["maker", ]:
-        for feature2 in ["repeatmasker", "protein2genome", "genemark", "ori_snap", "ori_augustus"]:
-            i = Intersect(feature1, feature2)
-            write_dct_table(i.percentage_dct, "output/" + feature1 + "." + feature2 + ".percentage.txt")
+    for strain in ['UCSC1', 'UMSG1', 'UMSG2', 'UMSG3']:
+        for version in ['A',]:
+            b = Bed(strain, version, "maker")
+            for feature1 in ["maker", ]:
+                for feature2 in ["repeatmasker", "protein2genome", "genemark", "ori_snap", "ori_augustus", "est2genome"]:
+                    i = Intersect(strain, strain, version, version, feature1, feature2)
+                    write_dct_table(i.percentage_dct, "output/" + strain + "." + version + "." + feature1 + "." + feature2 + ".percentage.txt")
+
+    for strain in ['UCSC1', 'UMSG1', 'UMSG2', 'UMSG3']:
+        for version in ['B', 'C']:
+            i = Intersect(strain, strain, 'A', version, 'maker', 'maker')
+            write_dct_table(i.percentage_dct, "output/" + strain + ".A.maker." + version + ".percentage.txt")
 
 if __name__ == '__main__':
     main()

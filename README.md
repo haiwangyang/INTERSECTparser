@@ -36,7 +36,9 @@ for i in \`cat U.list\`; do
 for feature in \`echo repeatmasker\`; do ./bedtools intersect -wo -a $i.A.maker.bed -b $i.A.$feature.bed >$i.A.maker.$feature.intersect; done;
 done<br>
 * other features (strickly stranded)<br>
-for feature in \`echo protein2genome genemark ori_snap ori_augustus est2genome\`; do ./bedtools intersect -s -wo -a maker.bed -b $feature.bed >maker.$feature.intersect; done<br>
+for i in \`cat U.list\`; do
+for feature in \`echo protein2genome genemark ori_snap ori_augustus est2genome\`; do ./bedtools intersect -s -wo -a $i.A.maker.bed -b $i.A.$feature.bed >$i.A.maker.$feature.intersect; done;
+done<br>
 
 ## put bed files to INTERSECTparser/bed/<br>
 

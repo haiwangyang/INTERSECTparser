@@ -30,7 +30,7 @@ done
 <br>
 
 ## bedtool intersect target v.s each queries<br>
-* repeatmasker (both strand)<br>
+* repeatmasker est2genome (both strand)<br>
 for i in \`cat U.list\`; do
 for feature in \`echo repeatmasker est2genome\`; do ./bedtools intersect -wo -a $i.A.maker.bed -b $i.A.$feature.bed >$i.A.maker.$feature.intersect; done;
 done<br>

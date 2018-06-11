@@ -111,18 +111,26 @@ class Intersect:
 
 
 def main():
+    #for strain in ['UCSC1', 'UMSG1', 'UMSG2', 'UMSG3']:
+    #    for version in ['A',]:
+    #        b = Bed(strain, version, "maker")
+    #        for feature1 in ["maker", ]:
+    #            for feature2 in ["repeatmasker", "protein2genome", "genemark", "ori_snap", "ori_augustus", "est2genome"]:
+    #                i = Intersect(strain, strain, version, version, feature1, feature2)
+    #                write_dct_table(i.percentage_dct, "output/" + strain + "." + version + "." + feature1 + "." + feature2 + ".percentage.txt")
+
+    #for strain in ['UCSC1', 'UMSG1', 'UMSG2', 'UMSG3']:
+    #    for version in ['B', 'C']:
+    #        i = Intersect(strain, strain, 'A', version, 'maker', 'maker')
+    #        write_dct_table(i.percentage_dct, "output/" + strain + ".A.maker." + version + ".percentage.txt")
+
     for strain in ['UCSC1', 'UMSG1', 'UMSG2', 'UMSG3']:
         for version in ['A',]:
             b = Bed(strain, version, "maker")
             for feature1 in ["maker", ]:
-                for feature2 in ["repeatmasker", "protein2genome", "genemark", "ori_snap", "ori_augustus", "est2genome"]:
+                for feature2 in ["est2genome",]:
                     i = Intersect(strain, strain, version, version, feature1, feature2)
                     write_dct_table(i.percentage_dct, "output/" + strain + "." + version + "." + feature1 + "." + feature2 + ".percentage.txt")
-
-    for strain in ['UCSC1', 'UMSG1', 'UMSG2', 'UMSG3']:
-        for version in ['B', 'C']:
-            i = Intersect(strain, strain, 'A', version, 'maker', 'maker')
-            write_dct_table(i.percentage_dct, "output/" + strain + ".A.maker." + version + ".percentage.txt")
 
 if __name__ == '__main__':
     main()
